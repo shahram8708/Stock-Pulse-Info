@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Info for {{ stock_info.symbol }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .section th,
+        .section td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section th {
+            background-color: #f2f2f2;
+        }
+
+        .section a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Stock Info for {{ stock_info.symbol }}</h1>
+    </header>
+    <main>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Symbol</td>
+                <td>{{ stock_info.symbol }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ stock_info.name }}</td>
+            </tr>
+            <tr>
+                <td>Sector</td>
+                <td>{{ stock_info.sector }}</td>
+            </tr>
+            <tr>
+                <td>Current Price</td>
+                <td>${{ stock_info.price }}</td>
+            </tr>
+            <tr>
+                <td>Open Price</td>
+                <td>${{ stock_info.open }}</td>
+            </tr>
+            <tr>
+                <td>High Price</td>
+                <td>${{ stock_info.high }}</td>
+            </tr>
+            <tr>
+                <td>Low Price</td>
+                <td>${{ stock_info.low }}</td>
+            </tr>
+            <tr>
+                <td>Previous Close Price</td>
+                <td>${{ stock_info.close }}</td>
+            </tr>
+            <tr>
+                <td>Trading Volume</td>
+                <td>{{ stock_info.volume }}</td>
+            </tr>
+            <tr>
+                <td>Average Volume</td>
+                <td>{{ stock_info.average_volume }}</td>
+            </tr>
+            <tr>
+                <td>Market Cap</td>
+                <td>${{ stock_info.market_cap }}</td>
+            </tr>
+            <tr>
+                <td>Dividend Yield</td>
+                <td>{{ stock_info.dividend_yield }}</td>
+            </tr>
+            <tr>
+                <td>Dividend Rate</td>
+                <td>{{ stock_info.dividend_rate }}</td>
+            </tr>
+            <tr>
+                <td>Dividend Date</td>
+                <td>{{ stock_info.dividend_date }}</td>
+            </tr>
+            <tr>
+                <td>Earnings Per Share (EPS)</td>
+                <td>{{ stock_info.eps }}</td>
+            </tr>
+            <tr>
+                <td>Price to Earnings Ratio (P/E)</td>
+                <td>{{ stock_info.pe_ratio }}</td>
+            </tr>
+            <tr>
+                <td>Earnings Date</td>
+                <td>{{ stock_info.earnings_date }}</td>
+            </tr>
+            <tr>
+                <td>52-Week High</td>
+                <td>${{ stock_info['52_week_high'] }}</td>
+            </tr>
+            <tr>
+                <td>52-Week Low</td>
+                <td>${{ stock_info['52_week_low'] }}</td>
+            </tr>
+            <tr>
+                <td>Website</td>
+                <td><a href="{{ stock_info.website }}" target="_blank">Visit {{ stock_info.symbol }}'s Website</a></td>
+            </tr>
+        </table>
+
+        <div class="historical-data">
+            <h2>Historical Data</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Close Price</th>
+                    <th>Volume</th>
+                </tr>
+                {% for date, data in stock_info.historical_data.items() %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>${{ data['Close'] }}</td>
+                    <td>{{ data['Volume'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="financial-statements">
+            <h2>Financial Statements</h2>
+            <div class="statement">
+                <h3>Income Statement</h3>
+                <table>
+                    <tr>
+                        <th>Year</th>
+                        <th>Total Revenue</th>
+                    </tr>
+                    {% for year, revenue in stock_info.financial_statements.income_statement.items() %}
+                    <tr>
+                        <td>{{ year }}</td>
+                        <td>${{ revenue }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="statement">
+                <h3>Balance Sheet</h3>
+                <table>
+                    <tr>
+                        <th>Year</th>
+                        <th>Total Assets</th>
+                    </tr>
+                    {% for year, assets in stock_info.financial_statements.balance_sheet.items() %}
+                    <tr>
+                        <td>{{ year }}</td>
+                        <td>${{ assets }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        <div class="economic-indicators">
+            <h2>Economic Indicators</h2>
+            <p>Interest Rate: {{ stock_info.economic_indicators.interest_rate }}</p>
+            <p>Inflation Rate: {{ stock_info.economic_indicators.inflation_rate }}</p>
+            <p>Employment Data: {{ stock_info.economic_indicators.employment_data }}</p>
+        </div>
+
+        <div class="fundamental-analysis">
+            <h2>Fundamental Analysis</h2>
+            <p>P/E Ratio: {{ stock_info.fundamental_analysis.pe_ratio }}</p>
+            <p>PEG Ratio: {{ stock_info.fundamental_analysis.peg_ratio }}</p>
+            <p>P/B Ratio: {{ stock_info.fundamental_analysis.pb_ratio }}</p>
+            <p>ROE: {{ stock_info.fundamental_analysis.roe }}</p>
+            <p>Debt to Equity: {{ stock_info.fundamental_analysis.debt_to_equity }}</p>
+        </div>
+
+        <div class="other-metrics">
+            <h2>Other Metrics</h2>
+            <p>Beta: {{ stock_info.other_metrics.beta }}</p>
+        </div>
+
+    </main>
+    <footer>
+        <p>&copy; 2024 Stock Information App. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

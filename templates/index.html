@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .about {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .about h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .about p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Stock Pulse Info</h1>
+        <p>Get the latest information about any stock.</p>
+    </header>
+    <main>
+        <section class="generator">
+            <h2>Enter a Stock Ticker Symbol</h2>
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+            <form action="/search" method="post">
+                <input type="text" name="search_query" placeholder="Enter Stock Ticker Symbol">
+                <button type="submit">Get Info</button>
+            </form>
+        </section>
+        <section class="about">
+            <h2>About Stock Pulse Info</h2>
+            <p>Welcome to our Stock Pulse Info application! Enter a stock ticker symbol to get the latest information
+                about that stock, including its price, market cap, 52-week high and low, and more. You'll also get
+                detailed financial statements, economic indicators, and fundamental analysis to help you make informed
+                decisions.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Stock Pulse Info. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
