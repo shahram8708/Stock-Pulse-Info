@@ -2,3 +2,4 @@ Flask==2.0.1
 yfinance==0.1.63
 pandas==1.4.0
 gunicorn==21.2.0
+werkzeug==2.1.1
